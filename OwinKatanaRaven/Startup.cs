@@ -12,7 +12,7 @@ namespace OwinKatanaRaven
     public class Startup
     {
         private const string Chars = "abcdefghijklmnoprstqwzABCDEFGHIJKLMNOPRSTQWZ01234567890";
-        private static readonly IDocumentStore DocumentStore = new EmbeddableDocumentStore { DataDirectory = "~/App_Data" };
+        private static readonly IDocumentStore DocumentStore = new EmbeddableDocumentStore { DataDirectory = "~/App_Data" }.Initialize();
 
         public void Configuration(IAppBuilder app)
         {
@@ -34,13 +34,15 @@ namespace OwinKatanaRaven
                     {
                         var random = new Random();
                         var hash = string.Join("", Enumerable.Range(0, 7).Select(_ => Chars[random.Next(Chars.Length)]));
-                        await session.StoreAsync(new Url() {Id = hash, Location = ctx.Request.Query["path"]});
+
+                        await session.StoreAsync(new Url {Id = hash, Location = ctx.Request.Query["path"]});
                         await session.SaveChangesAsync();
-                        ctx.Response.StatusCode =(int) HttpStatusCode.Created;
+
+                        ctx.Response.StatusCode = (int)HttpStatusCode.Created;
                         await ctx.Response.WriteAsync(hash);
                     }}
                 };
-                DocumentStore.Initialize();
+
                 using (var session = DocumentStore.OpenAsyncSession())
                     await actions[ctx.Request.Method](session);
             });
