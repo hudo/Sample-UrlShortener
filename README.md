@@ -9,12 +9,13 @@ Goals of this project:
  * use some simple scenario, like URL Shortener
  * leverage some database
  
- First project is built using OWIN and Katana (Microsoft implementation of OWIN), running on System.Web. 
- For database, RavenDb is used in Embedded mode. 
+
+First project is built using OWIN and Katana (Microsoft implementation of OWIN), running on System.Web. 
+For database, RavenDb is used in Embedded mode. 
  
  
- TODO:
-  * OWIN + Nancy
-  * sample with EF6
-  * vNext example
- 
+TODO:
+ * OWIN + Nancy
+ * sample with EF6
+ * vNext example
+
